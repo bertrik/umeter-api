@@ -1,0 +1,4 @@
+include 'umeter-api'
+
+// Here we set the overall project name. All other projects are seen as 'sub project' of this root project.
+rootProject.name = 'umeter-api'

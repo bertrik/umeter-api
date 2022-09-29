@@ -1,0 +1,13 @@
+apply plugin: "application"
+
+mainClassName = 'nl.bertriksikken.umeter.app.UmeterApp'
+
+dependencies {
+    implementation libraries.reload4j
+    
+    implementation libraries.guava
+    implementation libraries.retrofit
+    implementation libraries.jackson
+}
+
+
