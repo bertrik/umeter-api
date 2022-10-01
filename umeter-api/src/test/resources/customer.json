@@ -1,0 +1,65 @@
+{
+    "id": "edfd586c-6b4c-437e-b5f2-08da95cd6b4d",
+    "surName": "Bertrik Sikken",
+    "email": "bertrik@gmail.com",
+    "adviserCode": "umeter",
+    "hasAcceptedGDPR": true,
+    "hasAcceptedNewsLetter": true,
+    "emailSettings": {
+        "newFeatures": false,
+        "usageNotificationDaily": false,
+        "usageNotificationWeekly": false,
+        "usageNotificationMonthly": false,
+        "energyContractAlarm": false
+    },
+    "lang": "NL",
+    "addresses": [
+        {
+            "id": 63232,
+            "gId": "2defb474-c426-4fd8-a937-e41c104bccc7",
+            "title": "Heuvellaan",
+            "status": "Ok",
+            "elecMeterNumber": "elecMeterNumber",
+            "street": "xxx",
+            "buildingNr": 0,
+            "buildingNrEx": "",
+            "city": "Gouda",
+            "zipCode": "2803dn",
+            "yearBuilt": 2001,
+            "sqMeters": 100,
+            "buildingType": "Row",
+            "residents": 4,
+            "knmiStationId": 240,
+            "supplier": "Eneco",
+            "energyContractEndsOn": "20321231",
+            "contractAlarm": true,
+            "bba": 25.0,
+            "bbaGoal": 25.0,
+            "inclVAT": true,
+            "shouldUseOnlyCommercialTariffs": false,
+            "energyYearStartsOn": 8,
+            "energyContractStartsOn": "20200101",
+            "eEan": {
+                "ean": "ean",
+                "pricePeak": 0.26119,
+                "priceOffPeak": 0.20976,
+                "flatFee": 64.8,
+                "peakHourEndsOn": 23,
+                "status": "Ok"
+            },
+            "tussenMeters": [],
+            "inbetweenMeters": [],
+            "devices": [
+                {
+                    "id": "ean",
+                    "name": "Main elec meter",
+                    "type": "mainelec"
+                }
+            ],
+            "createdAt": "2022-09-23T22:54:50.577Z"
+        }
+    ],
+    "tussenMeters": [],
+    "p1Devices": [],
+    "isDemoCustomer": false
+}
