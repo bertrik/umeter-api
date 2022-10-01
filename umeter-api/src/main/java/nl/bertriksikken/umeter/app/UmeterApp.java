@@ -2,6 +2,8 @@ package nl.bertriksikken.umeter.app;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import nl.bertriksikken.oauth2.AuthApi;
 import nl.bertriksikken.umeter.api.CustomerData;
+import nl.bertriksikken.umeter.api.P4Data;
 import nl.bertriksikken.umeter.api.UmeterApi;
 import nl.bertriksikken.umeter.auth.AuthService;
 
@@ -36,7 +39,12 @@ public final class UmeterApp {
 
         UmeterApi umeterApi = UmeterApi.create(config.umeterApiConfig);
         CustomerData customerData = umeterApi.getCustomer(authToken);
-        LOG.info("EAN={}", customerData.addresses.get(0).eEan.ean);
+        String ean = customerData.addresses.get(0).eEan.ean;
+        LOG.info("EAN={}", ean);
+
+        ZonedDateTime dateTime = ZonedDateTime.now(ZoneId.systemDefault()).minusDays(2);
+        P4Data p4data = umeterApi.getP4Data(authToken, ean, dateTime, dateTime);
+        LOG.info("R181={}, R182={}", p4data.beginReadings.r181, p4data.beginReadings.r182);
     }
 
     private UmeterAppConfig getConfig(String fileName) throws IOException {

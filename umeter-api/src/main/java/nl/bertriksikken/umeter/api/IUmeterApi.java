@@ -12,7 +12,7 @@ public interface IUmeterApi {
     public Call<CustomerData> getCustomer(@Header("Authorization") String authorization);
 
     @GET("/api/P4/{ean}/{from}/{to}")
-    public Call<String> getData(@Header("Authorization") String authorization, @Path("ean") String ean,
+    public Call<P4Data> getP4Data(@Header("Authorization") String authorization, @Path("ean") String ean,
             @Path("from") String from, @Path("to") String to, @Query("explain") boolean explain);
 
 }
