@@ -21,6 +21,7 @@ public final class P4Data {
         return String.format(Locale.ROOT, "{beginReadings=%s,quarterData=%s}", beginReadings, quarterData);
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class QuarterData {
         @JsonProperty("dateFrom")
         public String dateFrom = "";
@@ -30,15 +31,6 @@ public final class P4Data {
 
         @JsonProperty("usage")
         public Readings usage = new Readings();
-
-        @JsonProperty("cost")
-        public Readings cost = new Readings();
-
-        @JsonProperty("totalCost")
-        public double totalCost = Double.NaN;
-
-        @JsonProperty("temperature")
-        public double temperature = Double.NaN;
 
         @Override
         public String toString() {
@@ -57,7 +49,7 @@ public final class P4Data {
         public double r282 = Double.NaN;
 
         public String toString() {
-            return String.format(Locale.ROOT, "{r181=%.2f,r182=%.2f}", r181, r182);
+            return String.format(Locale.ROOT, "{r181=%.2f,r182=%.2f,r281=%.2f,r282=%.2f}", r181, r182, r281, r282);
         }
     }
 }
