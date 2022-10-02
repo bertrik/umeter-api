@@ -1,36 +1,34 @@
-package nl.bertriksikken.oauth2;
+package nl.bertriksikken.umeter;
 
 import java.time.Duration;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 @JsonAutoDetect(getterVisibility = Visibility.NONE)
-public final class AuthApiConfig {
-    
+public final class RestApiConfig {
     @JsonProperty("url")
     private String url = "";
-    
+
     @JsonProperty("timeout")
-    private int timeout = 0;
-    
-    private AuthApiConfig() {
+    private int timeoutSec = 0;
+
+    private RestApiConfig() {
         // jackson constructor
     }
-    
-    public AuthApiConfig(String url, int timeout) {
+
+    public RestApiConfig(String url, int timeoutSec) {
         this();
         this.url = url;
-        this.timeout = timeout;
+        this.timeoutSec = timeoutSec;
     }
-    
+
     public String getUrl() {
         return url;
     }
-    
-    public Duration getTimeout() {
-        return Duration.ofSeconds(timeout);
-    }
 
+    public Duration getTimeout() {
+        return Duration.ofSeconds(timeoutSec);
+    }
 }

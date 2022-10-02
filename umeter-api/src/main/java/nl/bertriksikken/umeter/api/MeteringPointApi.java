@@ -1,4 +1,4 @@
-package nl.bertriksikken.oauth2;
+package nl.bertriksikken.umeter.api;
 
 import java.io.IOException;
 
@@ -12,35 +12,33 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public final class AuthApi {
+public final class MeteringPointApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AuthApi.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MeteringPointApi.class);
 
-    private final IAuthApi restApi;
+    private final IMeteringPointApi restApi;
 
-    private AuthApi(IAuthApi restApi) {
+    private MeteringPointApi(IMeteringPointApi restApi) {
         this.restApi = restApi;
     }
 
-    public static AuthApi create(RestApiConfig config) {
+    public static MeteringPointApi create(RestApiConfig config) {
         LOG.info("Creating new REST client for URL '{}' with timeout {}", config.getUrl(), config.getTimeout());
         OkHttpClient client = new OkHttpClient().newBuilder().callTimeout(config.getTimeout()).build();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(config.getUrl())
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(JacksonConverterFactory.create())
-                .client(client).build();
-        IAuthApi restApi = retrofit.create(IAuthApi.class);
-        return new AuthApi(restApi);
+                .addConverterFactory(JacksonConverterFactory.create()).client(client).build();
+        IMeteringPointApi restApi = retrofit.create(IMeteringPointApi.class);
+        return new MeteringPointApi(restApi);
     }
 
-    public AuthResponse getToken(String userName, String password) throws IOException {
-        AuthRequest request = AuthRequest.password(userName, password);
-        Response<AuthResponse> response = restApi.getToken(request.map()).execute();
+    public String getLastDayRequests(String authToken, String ean, int number) throws IOException {
+        Response<String> response = restApi.getLastDayRequests(authToken, ean, number).execute();
         if (response.isSuccessful()) {
             return response.body();
         } else {
             LOG.info("Error response: {}", response.errorBody().string());
-            return null;
+            return "";
         }
     }
 

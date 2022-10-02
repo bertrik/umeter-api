@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nl.bertriksikken.oauth2.AuthApi;
+import nl.bertriksikken.umeter.RestApiConfig;
 import okhttp3.OkHttpClient;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -24,7 +25,7 @@ public final class UmeterApi {
         this.restApi = restApi;
     }
 
-    public static UmeterApi create(UmeterApiConfig config) {
+    public static UmeterApi create(RestApiConfig config) {
         LOG.info("Creating new REST client for URL '{}' with timeout {}", config.getUrl(), config.getTimeout());
         OkHttpClient client = new OkHttpClient().newBuilder().callTimeout(config.getTimeout()).build();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(config.getUrl())

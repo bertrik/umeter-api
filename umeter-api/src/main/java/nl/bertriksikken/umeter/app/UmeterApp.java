@@ -13,6 +13,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import nl.bertriksikken.oauth2.AuthApi;
 import nl.bertriksikken.umeter.api.CustomerData;
+import nl.bertriksikken.umeter.api.MeteringPointApi;
 import nl.bertriksikken.umeter.api.P4Data;
 import nl.bertriksikken.umeter.api.UmeterApi;
 import nl.bertriksikken.umeter.auth.AuthService;
@@ -37,11 +38,18 @@ public final class UmeterApp {
         AuthService authService = new AuthService(authApi);
         String authToken = authService.getToken(config.user, config.pass);
 
+        // get customer EAN
         UmeterApi umeterApi = UmeterApi.create(config.umeterApiConfig);
         CustomerData customerData = umeterApi.getCustomer(authToken);
         String ean = customerData.addresses.get(0).eEan.ean;
         LOG.info("EAN={}", ean);
 
+        // get status of data requests
+        MeteringPointApi mpApi = MeteringPointApi.create(config.meteringPointConfig);
+        String mpResponse = mpApi.getLastDayRequests(authToken, ean, 2);
+        LOG.info("Metering point: {}", mpResponse);
+
+        // get meter readings
         ZonedDateTime dateTime = ZonedDateTime.now(ZoneId.systemDefault()).minusDays(2);
         P4Data p4data = umeterApi.getP4Data(authToken, ean, dateTime, dateTime);
         LOG.info("R181={}, R182={}", p4data.beginReadings.r181, p4data.beginReadings.r182);
