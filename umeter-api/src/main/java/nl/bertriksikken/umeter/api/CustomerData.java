@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public final class CustomerData {
 
     @JsonProperty("id")
-    public String id;
+    public String id = "";
 
     @JsonProperty("addresses")
     public List<Address> addresses = new ArrayList<>();
