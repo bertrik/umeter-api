@@ -19,6 +19,7 @@ public final class UmeterApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthApi.class);
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
+
     private final IUmeterApi restApi;
 
     private UmeterApi(IUmeterApi restApi) {
@@ -41,7 +42,7 @@ public final class UmeterApi {
         if (response.isSuccessful()) {
             return response.body();
         } else {
-            LOG.info("Error response: {}", response.errorBody().string());
+            LOG.info("Error response: {} - {}", response.code(), response.message());
             return null;
         }
     }
@@ -54,7 +55,7 @@ public final class UmeterApi {
         if (response.isSuccessful()) {
             return response.body();
         } else {
-            LOG.info("Error response: {}", response.errorBody().string());
+            LOG.info("Error response: {} - {}", response.code(), response.message());
             return null;
         }
     }

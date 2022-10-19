@@ -27,8 +27,7 @@ public final class AuthApi {
         OkHttpClient client = new OkHttpClient().newBuilder().callTimeout(config.getTimeout()).build();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(config.getUrl())
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(JacksonConverterFactory.create())
-                .client(client).build();
+                .addConverterFactory(JacksonConverterFactory.create()).client(client).build();
         IAuthApi restApi = retrofit.create(IAuthApi.class);
         return new AuthApi(restApi);
     }
@@ -39,7 +38,7 @@ public final class AuthApi {
         if (response.isSuccessful()) {
             return response.body();
         } else {
-            LOG.info("Error response: {}", response.errorBody().string());
+            LOG.info("Error response: {} - {}", response.code(), response.message());
             return null;
         }
     }
