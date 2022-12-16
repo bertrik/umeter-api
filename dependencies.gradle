@@ -1,9 +1,9 @@
 ext {
     libraries = [:]
 
-    jacksonVersion = '2.13.4'
+    jacksonVersion = '2.14.1'
     retrofitVersion = '2.9.0'
-    slf4jVersion = '2.0.3'
+    slf4jVersion = '2.0.6'
 }
 
 libraries.slf4j = [
@@ -32,5 +32,5 @@ libraries.retrofit_mock = 'com.squareup.retrofit2:retrofit-mock:2.8.1'
 
 // test libraries
 libraries.junit = 'junit:junit:4.13.2'
-libraries.mockito = 'org.mockito:mockito-core:4.8.0'
+libraries.mockito = 'org.mockito:mockito-core:4.10.0'
 
