@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nl.bertriksikken.oauth2.AuthApi;
+import nl.bertriksikken.oauth2.AuthClient;
 import nl.bertriksikken.oauth2.AuthException;
 import nl.bertriksikken.umeter.RestApiConfig;
 import nl.bertriksikken.umeter.auth.AuthService;
@@ -18,27 +18,27 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public final class UmeterApi {
+public final class UmeterClient {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AuthApi.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AuthClient.class);
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     private final IUmeterApi restApi;
     private final IAuthService authService;
 
-    private UmeterApi(IUmeterApi restApi, IAuthService authService) {
+    private UmeterClient(IUmeterApi restApi, IAuthService authService) {
         this.restApi = restApi;
         this.authService = authService;
     }
 
-    public static UmeterApi create(RestApiConfig config, AuthService authService) {
+    public static UmeterClient create(RestApiConfig config, AuthService authService) {
         LOG.info("Creating new REST client for URL '{}' with timeout {}", config.getUrl(), config.getTimeout());
         OkHttpClient client = new OkHttpClient().newBuilder().callTimeout(config.getTimeout()).build();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(config.getUrl())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(JacksonConverterFactory.create()).client(client).build();
         IUmeterApi restApi = retrofit.create(IUmeterApi.class);
-        return new UmeterApi(restApi, authService);
+        return new UmeterClient(restApi, authService);
     }
 
     public CustomerData getCustomer() throws IOException, AuthException {

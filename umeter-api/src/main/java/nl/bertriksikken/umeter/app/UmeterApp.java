@@ -12,12 +12,12 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
-import nl.bertriksikken.oauth2.AuthApi;
+import nl.bertriksikken.oauth2.AuthClient;
 import nl.bertriksikken.oauth2.AuthException;
 import nl.bertriksikken.umeter.api.CustomerData;
-import nl.bertriksikken.umeter.api.MeteringPointApi;
+import nl.bertriksikken.umeter.api.MeteringPointClient;
 import nl.bertriksikken.umeter.api.P4Data;
-import nl.bertriksikken.umeter.api.UmeterApi;
+import nl.bertriksikken.umeter.api.UmeterClient;
 import nl.bertriksikken.umeter.auth.AuthService;
 
 public final class UmeterApp {
@@ -31,7 +31,7 @@ public final class UmeterApp {
         try {
             app.run("umeter.yaml");
         } catch (AuthException e) {
-            LOG.warn("Authentication error");
+            LOG.warn("Authentication error", e);
         }
     }
 
@@ -40,25 +40,25 @@ public final class UmeterApp {
         UmeterAppConfig config = getConfig(configFileName);
 
         // create auth service
-        AuthApi authApi = AuthApi.create(config.authConfig);
-        AuthService authService = new AuthService(authApi, config.user, config.pass);
+        AuthClient authClient = AuthClient.create(config.authConfig);
+        AuthService authService = new AuthService(authClient, config.user, config.pass);
 
         // get customer EAN, this steps initiates authentication
-        UmeterApi umeterApi = UmeterApi.create(config.umeterApiConfig, authService);
-        CustomerData customerData = umeterApi.getCustomer();
+        UmeterClient umeterClient = UmeterClient.create(config.umeterApiConfig, authService);
+        CustomerData customerData = umeterClient.getCustomer();
         String ean = customerData.addresses.get(0).eEan.ean;
         LOG.info("EAN={}", ean);
 
         // get status of data requests
-        MeteringPointApi mpApi = MeteringPointApi.create(config.meteringPointConfig);
-        String mpResponse = mpApi.getLastDayRequests(authService.getBearerToken(), ean, 2);
+        MeteringPointClient meteringPointClient = MeteringPointClient.create(config.meteringPointConfig);
+        String mpResponse = meteringPointClient.getLastDayRequests(authService.getBearerToken(), ean, 2);
         LOG.info("Metering point: {}", mpResponse);
 
         // get meter readings from past month
         ZonedDateTime today = ZonedDateTime.now(ZoneId.systemDefault()).truncatedTo(ChronoUnit.DAYS);
         ZonedDateTime monthStart = today.minusMonths(1).withDayOfMonth(1);
         ZonedDateTime monthEnd = monthStart.plusMonths(1);
-        P4Data p4data = umeterApi.getP4Data(ean, monthStart, monthEnd);
+        P4Data p4data = umeterClient.getP4Data(ean, monthStart, monthEnd);
         LOG.info("R181={}, R182={}", p4data.beginReadings.r181, p4data.beginReadings.r182);
     }
 

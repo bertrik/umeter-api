@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import nl.bertriksikken.oauth2.AuthApi;
+import nl.bertriksikken.oauth2.AuthClient;
 import nl.bertriksikken.oauth2.AuthException;
 import nl.bertriksikken.oauth2.AuthResponse;
 
@@ -15,12 +15,12 @@ import nl.bertriksikken.oauth2.AuthResponse;
 public final class AuthService implements IAuthService {
 
     private final ObjectMapper mapper = new ObjectMapper();
-    private final AuthApi authApi;
+    private final AuthClient authClient;
     private final String user;
     private final String pass;
 
-    public AuthService(AuthApi authApi, String user, String pass) {
-        this.authApi = authApi;
+    public AuthService(AuthClient authClient, String user, String pass) {
+        this.authClient = authClient;
         this.user = user;
         this.pass = pass;
     }
@@ -42,7 +42,7 @@ public final class AuthService implements IAuthService {
      * Explicitly fetches authentication token, and caches it on the file system
      */
     private AuthResponse fetchAuthToken(File file) throws IOException, AuthException {
-        AuthResponse response = authApi.getToken(user, pass);
+        AuthResponse response = authClient.getToken(user, pass);
         if (response == null) {
             throw new AuthException("Could not get token for " + user);
         }
