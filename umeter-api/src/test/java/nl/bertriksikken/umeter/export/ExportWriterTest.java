@@ -15,7 +15,7 @@ import org.junit.rules.TemporaryFolder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import nl.bertriksikken.umeter.api.P4Data;
-import nl.bertriksikken.umeter.api.P4Data.QuarterData;
+import nl.bertriksikken.umeter.api.P4Data.PeriodReadings;
 
 public final class ExportWriterTest {
 
@@ -25,16 +25,16 @@ public final class ExportWriterTest {
     @Test
     public void testExport() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        P4Data data = mapper.readValue(this.getClass().getClassLoader().getResource("p4data.json"), P4Data.class);
+        P4Data p4Data = mapper.readValue(this.getClass().getClassLoader().getResource("p4data.json"), P4Data.class);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 .withZone(ZoneId.of("Europe/Amsterdam"));
         List<ExportRecord> records = new ArrayList<>();
-        for (QuarterData qdata : data.quarterData) {
-            ZonedDateTime from = ZonedDateTime.parse(qdata.dateFrom, formatter);
-            ZonedDateTime to = ZonedDateTime.parse(qdata.dateTo, formatter);
-            ExportRecord record = new ExportRecord(from, to, qdata.usage.r181, qdata.usage.r182, qdata.usage.r281,
-                    qdata.usage.r282);
+        for (PeriodReadings readings : p4Data.periodReadings) {
+            ZonedDateTime from = ZonedDateTime.parse(readings.dateFrom, formatter);
+            ZonedDateTime to = ZonedDateTime.parse(readings.dateTo, formatter);
+            ExportRecord record = new ExportRecord(from, to, readings.usage.r181, readings.usage.r182,
+                    readings.usage.r281, readings.usage.r282);
             records.add(record);
         }
 

@@ -11,18 +11,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public final class P4Data {
 
     @JsonProperty("beginReadings")
-    public Readings beginReadings = new Readings();
+    public Readings beginReading = new Readings();
 
     @JsonProperty("aData")
-    public List<QuarterData> quarterData = new ArrayList<>();
+    public List<PeriodReadings> periodReadings = new ArrayList<>();
 
     @Override
     public String toString() {
-        return String.format(Locale.ROOT, "{beginReadings=%s,quarterData=%s}", beginReadings, quarterData);
+        return String.format(Locale.ROOT, "{beginReading=%s,periodReadings=%s}", beginReading, periodReadings);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class QuarterData {
+    public static final class PeriodReadings {
         @JsonProperty("dateFrom")
         public String dateFrom = "";
 
@@ -38,6 +38,7 @@ public final class P4Data {
         }
     }
 
+    // a set of counter values, either absolute or delta
     public static final class Readings {
         @JsonProperty("r181")
         public double r181 = Double.NaN;
