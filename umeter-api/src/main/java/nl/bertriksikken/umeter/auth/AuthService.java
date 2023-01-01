@@ -3,46 +3,55 @@ package nl.bertriksikken.umeter.auth;
 import java.io.File;
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import nl.bertriksikken.oauth2.AuthApi;
+import nl.bertriksikken.oauth2.AuthException;
 import nl.bertriksikken.oauth2.AuthResponse;
 
-public final class AuthService {
-
-    private final Logger LOG = LoggerFactory.getLogger(AuthService.class);
+/**
+ * Authentication services, handles one user.
+ */
+public final class AuthService implements IAuthService {
 
     private final ObjectMapper mapper = new ObjectMapper();
     private final AuthApi authApi;
+    private final String user;
+    private final String pass;
 
-    public AuthService(AuthApi authApi) {
+    public AuthService(AuthApi authApi, String user, String pass) {
         this.authApi = authApi;
+        this.user = user;
+        this.pass = pass;
     }
 
-    // get cached token, return empty string if not found
-    public String getToken(String user, String pass) {
-        File file = new File(user + ".json");
-        AuthResponse authData = null;
-        try {
-            authData = mapper.readValue(file, AuthResponse.class);
-        } catch (IOException e) {
-            if (!file.delete()) {
-                LOG.warn("Failed to delete invalid {}", file);
-            }
+    @Override
+    public String getBearerToken() throws AuthException, IOException {
+        File file = createFile(user);
+        AuthResponse authData = file.exists() ? mapper.readValue(file, AuthResponse.class) : fetchAuthToken(file);
+        return "Bearer " + authData.accessToken;
+    }
+
+    @Override
+    public boolean dropAuthToken() {
+        File file = createFile(user);
+        return file.delete();
+    }
+    
+    /**
+     * Explicitly fetches authentication token, and caches it on the file system
+     */
+    private AuthResponse fetchAuthToken(File file) throws IOException, AuthException {
+        AuthResponse response = authApi.getToken(user, pass);
+        if (response == null) {
+            throw new AuthException("Could not get token for " + user);
         }
-        if (authData == null) {
-            try {
-                authData = authApi.getToken(user, pass);
-                mapper.writeValue(file, authData);
-            } catch (IOException e) {
-                LOG.warn("Could not fetch/cache token: ", e);
-                return "";
-            }
-        }
-        return authData.accessToken;
+        mapper.writeValue(file, response);
+        return response;
+    }
+
+    private File createFile(String user) {
+        return new File(user + ".json");
     }
 
 }
