@@ -20,15 +20,15 @@ subprojects {
     apply plugin: "eclipse"
     apply plugin: "com.github.spotbugs"
     apply plugin: 'com.github.ben-manes.versions'
-    
-    targetCompatibility = 1.14
-    sourceCompatibility = 1.14
+
+    java {
+        targetCompatibility = JavaVersion.VERSION_14
+        sourceCompatibility = JavaVersion.VERSION_14
+    }
 
     repositories {
         mavenCentral()
     }
-
-    spotbugsMain { reports { html { enabled = true } } }
 
     // Reject all non stable versions in dependency check
     tasks.named("dependencyUpdates").configure {

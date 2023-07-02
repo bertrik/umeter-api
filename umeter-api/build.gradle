@@ -1,6 +1,8 @@
 apply plugin: "application"
 
-mainClassName = 'nl.bertriksikken.umeter.app.UmeterApp'
+application {
+    mainClass = 'nl.bertriksikken.umeter.app.UmeterApp'
+}
 
 dependencies {
     implementation libs.slf4j.reload4j
