@@ -1,7 +1,7 @@
 [versions]
 jackson = "2.15.2"
 retrofit2 = "2.9.0"
-slf4j = "2.0.7"
+slf4j = "2.0.9"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
