@@ -17,7 +17,7 @@ retrofit2-converter-scalars = { module = "com.squareup.retrofit2:converter-scala
 
 junit = "junit:junit:4.13.2"
 
-mockito-core = "org.mockito:mockito-core:5.6.0"
+mockito-core = "org.mockito:mockito-core:5.8.0"
 
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 slf4j-reload4j = { module = "org.slf4j:slf4j-reload4j", version.ref = "slf4j" }
