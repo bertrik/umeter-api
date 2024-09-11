@@ -49,6 +49,7 @@ public final class P4Data {
         @JsonProperty("r282")
         public double r282 = Double.NaN;
 
+        @Override
         public String toString() {
             return String.format(Locale.ROOT, "{r181=%.2f,r182=%.2f,r281=%.2f,r282=%.2f}", r181, r182, r281, r282);
         }

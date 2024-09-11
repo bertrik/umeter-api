@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@SuppressWarnings("UnusedVariable")
 @JsonPropertyOrder({ "date", "from", "until", "r181", "r182", "r281", "r282" })
 public final class ExportRecord {
 

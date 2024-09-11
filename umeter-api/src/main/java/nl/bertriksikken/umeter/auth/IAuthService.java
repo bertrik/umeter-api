@@ -13,7 +13,7 @@ public interface IAuthService {
 
     /**
      * Drops the existing authentication token
-     * @returns true if it was actually dropped.
+     * @return true if it was actually dropped.
      */
     boolean dropAuthToken();
 
