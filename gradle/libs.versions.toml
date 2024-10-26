@@ -2,7 +2,7 @@
 jackson = "2.18.0"
 retrofit2 = "2.11.0"
 slf4j = "2.0.16"
-errorprone = "2.34.0"
+errorprone = "2.35.1"
 
 [libraries]
 errorprone_annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "errorprone" }
@@ -30,5 +30,4 @@ retrofit = ["retrofit2-retrofit", "retrofit2-converter-jackson", "retrofit2-conv
 [plugins]
 errorprone = "net.ltgt.errorprone:4.1.0"
 versions = "com.github.ben-manes.versions:0.51.0"
-version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.4"
 dependencycheck = "org.owasp.dependencycheck:8.4.0"
