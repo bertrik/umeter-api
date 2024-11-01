@@ -1,5 +1,12 @@
 package nl.bertriksikken.umeter.export;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import nl.bertriksikken.umeter.api.P4Data;
+import nl.bertriksikken.umeter.api.P4Data.PeriodReadings;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.ZoneId;
@@ -7,15 +14,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import nl.bertriksikken.umeter.api.P4Data;
-import nl.bertriksikken.umeter.api.P4Data.PeriodReadings;
 
 public final class ExportWriterTest {
 
@@ -30,11 +28,11 @@ public final class ExportWriterTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 .withZone(ZoneId.of("Europe/Amsterdam"));
         List<ExportRecord> records = new ArrayList<>();
-        for (PeriodReadings readings : p4Data.periodReadings) {
-            ZonedDateTime from = ZonedDateTime.parse(readings.dateFrom, formatter);
-            ZonedDateTime to = ZonedDateTime.parse(readings.dateTo, formatter);
-            ExportRecord record = new ExportRecord(from, to, readings.usage.r181, readings.usage.r182,
-                    readings.usage.r281, readings.usage.r282);
+        for (PeriodReadings readings : p4Data.periodReadings()) {
+            ZonedDateTime from = ZonedDateTime.parse(readings.dateFrom(), formatter);
+            ZonedDateTime to = ZonedDateTime.parse(readings.dateTo(), formatter);
+            ExportRecord record = new ExportRecord(from, to, readings.usage().r181(), readings.usage().r182(),
+                    readings.usage().r281(), readings.usage().r282());
             records.add(record);
         }
 

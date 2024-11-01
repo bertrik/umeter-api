@@ -46,7 +46,7 @@ public final class UmeterApp {
         // get customer EAN, this steps initiates authentication
         UmeterClient umeterClient = UmeterClient.create(config.umeterApiConfig, authService);
         CustomerData customerData = umeterClient.getCustomer();
-        String ean = customerData.addresses.get(0).eEan.ean;
+        String ean = customerData.addresses().get(0).eEan().ean();
         LOG.info("EAN={}", ean);
 
         // get status of data requests
@@ -59,7 +59,7 @@ public final class UmeterApp {
         ZonedDateTime monthStart = today.minusMonths(1).withDayOfMonth(1);
         ZonedDateTime monthEnd = monthStart.plusMonths(1);
         P4Data p4data = umeterClient.getP4Data(ean, monthStart, monthEnd);
-        LOG.info("R181={}, R182={}", p4data.beginReading.r181, p4data.beginReading.r182);
+        LOG.info("R181={}, R182={}", p4data.beginReading().r181(), p4data.beginReading().r182());
     }
 
     private UmeterAppConfig getConfig(String fileName) throws IOException {

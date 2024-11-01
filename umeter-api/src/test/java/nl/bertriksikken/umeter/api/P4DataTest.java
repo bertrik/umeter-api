@@ -20,18 +20,18 @@ public final class P4DataTest {
         URL url = this.getClass().getClassLoader().getResource("p4data.json");
         P4Data p4Data = mapper.readValue(url, P4Data.class);
 
-        List<PeriodReadings> aData = p4Data.periodReadings;
-        Assert.assertTrue(aData.size() > 0);
+        List<PeriodReadings> aData = p4Data.periodReadings();
+        Assert.assertFalse(aData.isEmpty());
 
         PeriodReadings readings = aData.get(0);
-        Assert.assertEquals("2022-09-28 00:00:00", readings.dateFrom);
-        Assert.assertEquals("2022-09-28 00:15:00", readings.dateTo);
+        Assert.assertEquals("2022-09-28 00:00:00", readings.dateFrom());
+        Assert.assertEquals("2022-09-28 00:15:00", readings.dateTo());
 
-        Readings usage = readings.usage;
-        Assert.assertEquals(0.02, usage.r181, 0.01);
-        Assert.assertEquals(0.0, usage.r182, 0.01);
-        Assert.assertEquals(0.0, usage.r281, 0.01);
-        Assert.assertEquals(0.0, usage.r282, 0.01);
+        Readings usage = readings.usage();
+        Assert.assertEquals(0.02, usage.r181(), 0.01);
+        Assert.assertEquals(0.0, usage.r182(), 0.01);
+        Assert.assertEquals(0.0, usage.r281(), 0.01);
+        Assert.assertEquals(0.0, usage.r282(), 0.01);
     }
 
 }
