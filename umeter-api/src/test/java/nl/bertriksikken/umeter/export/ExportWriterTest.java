@@ -3,9 +3,8 @@ package nl.bertriksikken.umeter.export;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.bertriksikken.umeter.api.P4Data;
 import nl.bertriksikken.umeter.api.P4Data.PeriodReadings;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +16,8 @@ import java.util.List;
 
 public final class ExportWriterTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    File folder;
 
     @Test
     public void testExport() throws IOException {
@@ -36,7 +35,7 @@ public final class ExportWriterTest {
             records.add(record);
         }
 
-        File file = folder.newFile();
+        File file = new File(folder, "export.csv");
         ExportWriter writer = new ExportWriter(file);
         writer.write(records);
     }
