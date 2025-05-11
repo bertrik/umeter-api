@@ -1,9 +1,9 @@
 [versions]
-jackson = "2.18.3"
-junit = "5.12.0"
+jackson = "2.19.0"
+junit = "5.12.2"
 retrofit2 = "2.11.0"
 slf4j = "2.0.17"
-errorprone = "2.36.0"
+errorprone = "2.38.0"
 
 [libraries]
 errorprone_annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "errorprone" }
@@ -21,7 +21,7 @@ junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
-mockito-core = "org.mockito:mockito-core:5.16.0"
+mockito-core = "org.mockito:mockito-core:5.17.0"
 
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 slf4j-reload4j = { module = "org.slf4j:slf4j-reload4j", version.ref = "slf4j" }
@@ -31,6 +31,6 @@ jackson = ["jackson-databind", "jackson-dataformat-yaml", "jackson-dataformat-cs
 retrofit = ["retrofit2-retrofit", "retrofit2-converter-jackson", "retrofit2-converter-scalars"]
 
 [plugins]
-errorprone = "net.ltgt.errorprone:4.1.0"
+errorprone = "net.ltgt.errorprone:4.2.0"
 versions = "com.github.ben-manes.versions:0.52.0"
 dependencycheck = "org.owasp.dependencycheck:8.4.0"
