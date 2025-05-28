@@ -1,7 +1,7 @@
 [versions]
 jackson = "2.19.0"
 junit = "5.12.2"
-retrofit2 = "2.11.0"
+retrofit2 = "3.0.0"
 slf4j = "2.0.17"
 errorprone = "2.38.0"
 
@@ -21,7 +21,7 @@ junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
-mockito-core = "org.mockito:mockito-core:5.17.0"
+mockito-core = "org.mockito:mockito-core:5.18.0"
 
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 slf4j-reload4j = { module = "org.slf4j:slf4j-reload4j", version.ref = "slf4j" }
