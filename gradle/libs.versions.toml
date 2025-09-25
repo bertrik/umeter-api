@@ -1,8 +1,8 @@
 [versions]
-errorprone = "2.41.0"
+errorprone = "2.42.0"
 jackson = "2.20.0"
 junit = "5.13.4"
-mockito = "5.19.0"
+mockito = "5.20.0"
 retrofit2 = "3.0.0"
 slf4j = "2.0.17"
 
@@ -34,4 +34,4 @@ retrofit = ["retrofit2-retrofit", "retrofit2-converter-jackson", "retrofit2-conv
 [plugins]
 dependencycheck = "org.owasp.dependencycheck:8.4.3"
 errorprone = "net.ltgt.errorprone:4.3.0"
-versions = "com.github.ben-manes.versions:0.52.0"
+versions = "com.github.ben-manes.versions:0.53.0"
