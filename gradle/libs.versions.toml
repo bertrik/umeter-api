@@ -32,6 +32,5 @@ jackson = ["jackson-databind", "jackson-dataformat-yaml", "jackson-dataformat-cs
 retrofit = ["retrofit2-retrofit", "retrofit2-converter-jackson", "retrofit2-converter-scalars"]
 
 [plugins]
-dependencycheck = "org.owasp.dependencycheck:8.4.3"
 errorprone = "net.ltgt.errorprone:5.1.0"
 versions = "com.github.ben-manes.versions:0.54.0"
